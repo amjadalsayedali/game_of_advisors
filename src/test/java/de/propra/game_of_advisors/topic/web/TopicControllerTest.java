@@ -1,6 +1,7 @@
 package de.propra.game_of_advisors.topic.web;
 
 import de.propra.game_of_advisors.SecurityConfig;
+import de.propra.game_of_advisors.topic.application.TopicDetails;
 import de.propra.game_of_advisors.topic.application.TopicQueryService;
 import de.propra.game_of_advisors.topic.application.TopicSummary;
 import org.junit.jupiter.api.DisplayName;
@@ -12,6 +13,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.*;
@@ -47,5 +49,37 @@ class TopicControllerTest {
                 .andExpect(view().name("topics"))
                 .andExpect(model().attribute("topics", hasSize(1)));
     }
+
+    @Test
+    @DisplayName("shows Topic details")
+    void test_02() throws Exception {
+        TopicDetails topic = new TopicDetails(
+                1L,
+                "Entwicklung eines Parsergenerators in Rust",
+                "Beschreibung",
+                "Karla Turing",
+                1L,
+                List.of("Compilerbau", "Rust"),
+                List.of("Compilerbau")
+        );
+        given(topicQueryService.findById(1L))
+        .willReturn(Optional.of(topic));
+
+        mockMvc.perform(get("/topics/1"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("topic"))
+                .andExpect(model().attribute("topic", topic));
+    }
+
+    @Test
+    @DisplayName("returns not found for unknown topics")
+    void test_03() throws Exception {
+        given(topicQueryService.findById(999L))
+                .willReturn(Optional.empty());
+
+        mockMvc.perform(get("/topics/999"))
+                .andExpect(status().isNotFound());
+    }
+
 
 }

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title th:text="${topic.title}">Thema</title>
+</head>
+<body>
+<header>
+  <h1>Game of Advisors</h1>
+
+  <nav aria-label="Hauptnavigation">
+    <lu>
+      <li>
+        <a href="/advisors">Betreuer:innen</a>
+      </li>
+      <li>
+        <a href="/topics">Themen</a>
+      </li>
+      <li>
+        <a href="/matching">Matching</a>
+      </li>
+    </lu>
+  </nav>
+</header>
+
+<main>
+  <p>
+    <a href="/topics"><- Zurück zu den Themen</a>
+  </p>
+
+  <h2 th:text="${topic.title}">
+    Thema
+  </h2>
+
+  <section aria-labelledby="advisor-heading">
+    <h3 id="advisor-heading">Betreuung</h3>
+
+    <p th:text="${topic.advisorName}">
+      Betreuungsperson
+    </p>
+
+    <a th:href="@{/advisors/{id}(id=${topic.advisorId})}">
+      Profil ansehen
+    </a>
+  </section>
+
+  <section aria-labelledby="fields-heading">
+    <h3 id="fields-heading">Fachgebiete</h3>
+
+    <ul>
+      <li th:each="field : ${topic.fields}"
+          th:text="${field}">Fachgebiet</li>
+    </ul>
+  </section>
+
+  <section aria-labelledby="description-heading">
+    <h3 id="description-heading">Beschreibung</h3>
+
+    <p th:text="${topic.description}">
+      Beschreibung
+    </p>
+  </section>
+
+  <section aria-labelledby="requirements-heading">
+    <h3 id="requirements-heading">Voraussetzungen</h3>
+
+    <ul th:if="${!topic.requiredCourses.isEmpty()}">
+      <li th:each="course : ${topic.requiredCourses}"
+      th:text="${course}">
+      Veranstaltungen
+      </li>
+    </ul>
+
+    <p th:if="${topic.requiredCourses.isEmpty()}">
+      Keine vorausgesetzten Veranstaltungen.
+    </p>
+  </section>
+</main>
+</body>
+</html>

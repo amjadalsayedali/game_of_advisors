@@ -3,6 +3,7 @@ package de.propra.game_of_advisors.topic.application;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TopicQueryService {
@@ -23,5 +24,33 @@ public class TopicQueryService {
                         List.of()
                 )
         );
+    }
+
+    public Optional<TopicDetails> findById(long id) {
+        return switch ((int) id){
+            case 1 -> Optional.of(new TopicDetails(
+                    1L,
+                    "Entwicklung eines Parsergenerators in Rust",
+                    """
+                            In dieser Abschlussarbeit soll ein Parsergenerator in Rust entwickelt werden.
+                            """,
+                    "Karla Turing",
+                    1L,
+                    List.of("Compilerbau", "Rust"),
+                    List.of("Compilerbau")
+            ));
+            case 2 -> Optional.of(new TopicDetails(
+                    2L,
+                    "Verifikation verteilter Systeme",
+                    """
+                            Untersuchung und Verifikation verteilter Systeme mit formalen Methoden
+                            """,
+                    "Ada Lovelace",
+                    2L,
+                    List.of("Formale Methoden"),
+                    List.of()
+            ));
+            default -> Optional.empty();
+        };
     }
 }
