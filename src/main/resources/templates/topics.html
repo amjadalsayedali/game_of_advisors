@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="de"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Themen finden</title>
+</head>
+<body>
+<header>
+    <h1>Game of Advisors</h1>
+
+    <nav aria-label="Hauptnavigation">
+        <ul>
+            <li><a href="/advisors">Betreuer:innen</a></li>
+            <li><a href="/topics">Themen</a></li>
+            <li><a href="/matching">Matching</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <h2>Themen finden</h2>
+
+    <section aria-labelledby="topics-heading">
+        <h2 id="topics-heading">Verfügbare Themen</h2>
+
+        <p th:if="${topics.isEmpty()}">
+            Aktuell sind keine Themen vorhanden.
+        </p>
+
+        <article th:each="topic : ${topics}">
+            <h3 th:text="${topic.title}">Thema</h3>
+            <p>
+                Betreuung:
+                <span th:text="${topic.advisorName}">Name</span>
+            </p>
+
+            <p>
+                Fachgebiete:
+                <span th:text="${#strings.listJoin(topic.fields, ', ')}">Fachgebiete</span>
+            </p>
+
+            <div th:if="${!topic.requiredCourses.isEmpty()}">
+                <p>Vorausgesetzte Veranstaltungen:</p>
+                <ul>
+                    <li th:each="course : ${topic.requiredCourses}"
+                    th:text="${course}">Veranstaltung
+                    </li>
+                </ul>
+            </div>
+
+            <p th:if="${topic.requiredCourses.isEmpty()}">
+                Keine vorausgesetzten Veranstaltungen.
+            </p>
+
+            <a th:href="@{/topics/{id}(id=${topic.id})}">
+                Thema ansehen
+            </a>
+        </article>
+    </section>
+</main>
+
+</body>
+</html>
