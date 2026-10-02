@@ -18,7 +18,7 @@ public class TopicQueryService {
                 ),
                 new TopicSummary(
                         2L,
-                        "Verifikation verteiler Systeme",
+                        "Verifikation verteilter Systeme",
                         "Ada Lovelace",
                         List.of("Formale Methoden"),
                         List.of()
@@ -52,5 +52,18 @@ public class TopicQueryService {
             ));
             default -> Optional.empty();
         };
+    }
+
+    public List<TopicSummary> findByFields(List<String> fields) {
+        if(fields.isEmpty()) {
+            return findAll();
+        }
+
+        return findAll().stream()
+                .filter(topic ->
+                        topic.fields().stream()
+                                .anyMatch(fields::contains)
+                )
+                .toList();
     }
 }

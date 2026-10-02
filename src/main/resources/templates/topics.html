@@ -23,11 +23,57 @@
 <main>
     <h2>Themen finden</h2>
 
+    <form method="get" th:action="@{/topics}">
+          <fieldset>
+              <legend>Fachgebiete</legend>
+
+              <label>
+                  <input
+                      type="checkbox"
+                      name="field"
+                      value="Compilerbau"
+                      th:checked="${selectedFields.contains('Compilerbau')}">
+                  Compilerbau
+              </label>
+
+              <label>
+                  <input
+                  type="checkbox"
+                  name="field"
+                  value="Rust"
+                  th:checked="${selectedFields.contains('Rust')}">
+                  Rust
+              </label>
+
+              <label>
+                  <input
+                  type="checkbox"
+                  name="field"
+                  value="Formale Methoden"
+                  th:checked="${selectedFields.contains('Formale Methoden')}">
+                  Formale Methoden
+              </label>
+
+              <label>
+                  <input
+                  type="checkbox"
+                  name="field"
+                  value="Java"
+                  th:checked="${selectedFields.contains('Java')}">
+                  Java
+              </label>
+          </fieldset>
+
+        <button type="submit">Filtern</button>
+
+        <a href="/topics">Filter zurücksetzen></a>
+    </form>
+
     <section aria-labelledby="topics-heading">
         <h2 id="topics-heading">Verfügbare Themen</h2>
 
         <p th:if="${topics.isEmpty()}">
-            Aktuell sind keine Themen vorhanden.
+            Keine passenden Themen gefunden.
         </p>
 
         <article th:each="topic : ${topics}">

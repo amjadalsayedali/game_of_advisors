@@ -34,7 +34,7 @@ class TopicControllerTest {
     @Test
     @DisplayName("shows Topics view")
     void test_01() throws Exception {
-        given(topicQueryService.findAll())
+        given(topicQueryService.findByFields(List.of()))
                 .willReturn(List.of(
                         new TopicSummary(
                                 1L,
@@ -47,7 +47,9 @@ class TopicControllerTest {
         mockMvc.perform(get("/topics"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("topics"))
-                .andExpect(model().attribute("topics", hasSize(1)));
+                .andExpect(model().attribute("topics", hasSize(1)))
+                .andExpect(model().attribute("selectedFields", List.of())
+                );
     }
 
     @Test
@@ -79,6 +81,50 @@ class TopicControllerTest {
 
         mockMvc.perform(get("/topics/999"))
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    @DisplayName("filters topics by multiple fields")
+    void test_04() throws Exception {
+        given(topicQueryService.findByFields(List.of("Compilerbau", "Formale Methoden")))
+                .willReturn(List.of(
+                        new TopicSummary(
+                                1L,
+                                "Entwicklung eines Parsergenerators in Rust",
+                                "Karla Turing",
+                                List.of("Compilerbau", "Rust"),
+                                List.of("Compilerbau")
+                        ),
+                        new TopicSummary(
+                                2L,
+                                "Verifikation verteilter Systeme",
+                                "Ada Lovelace",
+                                List.of("Formale Methoden"),
+                                List.of()
+                        )
+                ));
+
+        mockMvc.perform(
+                get("/topics")
+                    .param(
+                "field",
+                "Compilerbau",
+                "Formale Methoden"
+                    )
+                )
+                .andExpect(status().isOk())
+                .andExpect(view().name("topics"))
+                .andExpect(model().attribute(
+                        "topics",
+                        hasSize(2)
+                ))
+                .andExpect(model().attribute(
+                        "selectedFields",
+                        List.of(
+                                "Compilerbau",
+                                "Formale Methoden"
+                )
+                ));
     }
 
 
