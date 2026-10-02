@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Advisors</title>
+</head>
+<body>
+    <header>
+        <h1>Game of Advisors</h1>
+        <nav aria-label="Hauptnavigation">
+            <ul>
+                <li><a href="/advisors">Betreuer:innen</a></li>
+                <li><a href="/topics">Themen</a></li>
+                <li><a href="/matching">Matching</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Betreuer:innen finden</h2>
+
+        <form method="get" action="/advisors">
+            <fieldset>
+                <legend>Fachgebiete</legend>
+                <label>
+                    <input
+                            type="checkbox"
+                            name="field"
+                            value="Compilerbau"
+                            th:checked="${selectedFields.contains('Compilerbau')}">
+                    Compilerbau
+                </label>
+
+                <label>
+                    <input
+                    type="checkbox"
+                    name="field"
+                    value="Formale Methoden"
+                    th:checked="${selectedFields.contains('Formale Methoden')}">
+                    Formale Methoden
+                </label>
+
+                <label>
+                    <input
+                    type="checkbox"
+                    name="field"
+                    value="Java"
+                    th:checked="${selectedFields.contains('Java')}">
+                    Java
+                </label>
+
+                <label>
+                    <input
+                    type="checkbox"
+                    name="field"
+                    value="Software Engineering"
+                    th:checked="${selectedFields.contains('Software Engineering')}">
+                    Software Engineering
+                </label>
+            </fieldset>
+
+            <button type="submit">Filtern</button>
+
+            <a href="/advisors">Filter zurücksetzen</a>
+        </form>
+
+        <section aria-labelledby="results-heading">
+            <h2 id="results-heading">Ergebnisse</h2>
+
+            <p th:if="${advisors.isEmpty()}">
+                Keine passenden Betreuer:innen gefunden.
+            </p>
+
+            <article th:each="advisor : ${advisors}">
+                <h3 th:text="${advisor.name}">Name</h3>
+                <p th:text="${#strings.listJoin(advisor.fields, ', ')}">Fachgebiete</p>
+                <a th:href="@{/advisors/{id}(id=${advisor.id})}">Profil ansehen</a>
+            </article>
+        </section>
+    </main>
+</body>
+</html>

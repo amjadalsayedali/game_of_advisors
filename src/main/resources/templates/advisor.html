@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${advisor.name}">Advisor</title>
+</head>
+<body>
+  <header>
+    <h1>Game of Advisors</h1>
+
+    <nav aria-label="Hauptnavigation">
+      <lu>
+        <li>
+          <a href="/advisors">Betreuer:innen</a>
+        </li>
+        <li>
+          <a href="/topics">Themen</a>
+        </li>
+        <li>
+          <a href="/matching">Matching</a>
+        </li>
+      </lu>
+    </nav>
+  </header>
+
+<main>
+  <p>
+    <a href="/advisors"><- Zurück zur Suche</a>
+  </p>
+
+  <h2 th:text="${advisor.name}">Name</h2>
+
+  <section aria-labelledby="fields-heading">
+    <h3 id="fields-heading">Fachgebiete</h3>
+
+    <ul>
+      <li th:each="field : ${advisor.fields}"
+          th:text="${field}">Fachgebiet</li>
+    </ul>
+  </section>
+
+  <section aria-labelledby="contact-heading">
+    <h3 id="contact-heading">Kontakt</h3>
+    <p>
+      E-Mail:
+      <a th:href="'mailto:' + ${advisor.email}"
+         th:text="${advisor.email}">
+        beispiel@hhu.de
+      </a>
+    </p>
+  </section>
+
+  <section aria-labelledby="files-heading">
+    <h3 id="files-heading">Datein</h3>
+
+    <p th:if="${advisor.files.isEmpty()}">Keine Dateien vorhanden.</p>
+    <article th:each="file : ${advisor.files}">
+      <h4 th:text="${file.title}">Dateititel</h4>
+      <p th:if="${file.description != null}" th:text="${file.description}">Beschreibung></p>
+      <p>Dateityp:<span th:text="${file.type()}">Dateityp</span></p>
+      <p>Hochgeladen von:<span th:text="${file.uploadedBy}">Name</span></p>
+      <p>Hochgeladen am:<span th:text="${file.uploadedAt()}">Datum</span></p>
+      <a th:if="${file.type == 'Markdown'}" th:href="@{files/{id}(id=${file.id})}">Ansehen</a>
+      <a th:if="${file.type == 'PDF' or file.type == 'ZIP'}" th:href="@{files/{id}/download(id=${file.id})}">Herunterladen</a>
+    </article>
+  </section>
+
+  <section aria-labelledby="topics-heading">
+    <h3 id="topics-heading">Mögliche Themen</h3>
+    <p th:if="${advisor.topics.isEmpty()}">Keine Themenvorschläge vorhanden.</p>
+    <article th:each="topic : ${advisor.topics}">
+      <h4 th:text="${topic.title}">Thema</h4>
+      <p>
+      Fachgebiete:
+        <span th:text="${#strings.listJoin(topic.fields, ', ')}">Fachgebiete</span>
+      </p>
+      <div th:if="${!topic.requiredCourses.isEmpty()}">
+        <p>Vorausgesetzte Veranstaltungen:</p>
+        <ul>
+          <li th:each="course : ${topic.requiredCourses}"
+              th:text="${course}">Veranstaltungen</li>
+        </ul>
+      </div>
+      <p th:if="${topic.requiredCourses.isEmpty()}">Keine vorausgesetzten Veranstaltungen.</p>
+      <a th:href="@{/topics/{id}(id=${topic.id})}">Thema ansehen</a>
+    </article>
+  </section>
+</main>
+</body>
+</html>
