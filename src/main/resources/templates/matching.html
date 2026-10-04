@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matching</title>
+</head>
+<body>
+<header>
+    <h1>Game of Advisors</h1>
+    <nav aria-label="Hauptnavigation">
+        <ul>
+            <li><a href="/advisors">Betreuer:innen</a></li>
+            <li><a href="/topics">Themen</a></li>
+            <li><a href="/matching">Matching</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <h2>Matching</h2>
+
+    <p>
+        Wähle deine Interessensgebiete und die Veranstaltungen aus, die du bereits bestanden hast.
+    </p>
+
+    <form method="get" action="/matching/result">
+        <fieldset>
+            <legend>Interessensgebiete</legend>
+
+            <label>
+                <input type="checkbox"
+                       name="interest"
+                       value="Compilerbau">
+                Compilerbau
+            </label>
+
+            <label>
+                <input type="checkbox"
+                name="interest"
+                value="Formale Methoden">
+                Formale Methoden
+            </label>
+
+            <label>
+                <input type="checkbox"
+                name="interest"
+                value="Rust">
+                Rust
+            </label>
+
+            <label>
+                <input type="checkbox"
+                name="interest"
+                value="Java">
+                Java
+            </label>
+        </fieldset>
+
+        <fieldset>
+            <legend>Bestandene Veranstaltungen</legend>
+
+            <label>
+                <input type="checkbox"
+                name="course"
+                value="Compilerbau">
+                Compilerbau
+            </label>
+
+            <label>
+                <input type="checkbox"
+                name="course"
+                value="Software Engineering">
+                Software Engineering
+            </label>
+
+            <label>
+                <input type="checkbox"
+                name="course"
+                value="Datenbanken">
+                Datenbanken
+            </label>
+
+            <label>
+                <input type="checkbox"
+                name="course"
+                value="Formale Methoden">
+                Formale Methoden
+            </label>
+        </fieldset>
+
+        <button type="submit">Matches finden</button>
+    </form>
+</main>
+</body>
+</html>
