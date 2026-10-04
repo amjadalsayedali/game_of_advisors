@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="de"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Matching-Ergebnisse</title>
+</head>
+
+<body>
+
+<header>
+    <h1>Game of Advisors</h1>
+
+    <nav aria-label="Hauptnavigation">
+        <ul>
+            <li><a href="/advisors">Betreuer:innen</a></li>
+            <li><a href="/topics">Themen</a></li>
+            <li><a href="/matching">Matching</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+
+    <p>
+        <a href="/matching">← Matching ändern</a>
+    </p>
+
+    <h2>Matching-Ergebnisse</h2>
+
+    <section aria-labelledby="selection-heading">
+        <h3 id="selection-heading">Deine Angaben</h3>
+
+        <h4>Interessensgebiete</h4>
+
+        <ul th:if="${!interests.isEmpty()}">
+            <li th:each="interest : ${interests}"
+                th:text="${interest}">
+                Interesse
+            </li>
+        </ul>
+
+        <p th:if="${interests.isEmpty()}">
+            Keine Interessensgebiete ausgewählt.
+        </p>
+
+        <h4>Bestandene Veranstaltungen</h4>
+
+        <ul th:if="${!passedCourses.isEmpty()}">
+            <li th:each="course : ${passedCourses}"
+                th:text="${course}">
+                Veranstaltung
+            </li>
+        </ul>
+
+        <p th:if="${passedCourses.isEmpty()}">
+            Keine Veranstaltungen ausgewählt.
+        </p>
+    </section>
+
+
+    <section aria-labelledby="topic-results-heading">
+        <h3 id="topic-results-heading">Passende Themen</h3>
+
+        <p th:if="${result.topics.isEmpty()}">
+            Keine passenden Themen gefunden.
+        </p>
+
+        <article th:each="topic : ${result.topics}">
+            <h4 th:text="${topic.title}">
+                Thema
+            </h4>
+
+            <a th:href="@{/topics/{id}(id=${topic.id})}">
+                Thema ansehen
+            </a>
+        </article>
+    </section>
+
+
+    <section aria-labelledby="advisor-results-heading">
+        <h3 id="advisor-results-heading">
+            Passende Betreuer:innen
+        </h3>
+
+        <p th:if="${result.advisors.isEmpty()}">
+            Keine passenden Betreuer:innen gefunden.
+        </p>
+
+        <article th:each="advisor : ${result.advisors}">
+            <h4 th:text="${advisor.name}">
+                Betreuungsperson
+            </h4>
+
+            <a th:href="@{/advisors/{id}(id=${advisor.id})}">
+                Profil ansehen
+            </a>
+        </article>
+    </section>
+
+</main>
+
+</body>
+</html>
