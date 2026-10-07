@@ -27,6 +27,10 @@ public class SecurityConfig {
                                 "/login/**",
                                 "/oauth2/**")
                         .permitAll()
+
+                        .requestMatchers("/admin/**")
+                        .hasRole("ADMIN")
+
                         .anyRequest()
                         .authenticated()
                 )
