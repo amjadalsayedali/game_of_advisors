@@ -1,4 +1,4 @@
-package de.propra.game_of_advisors.user;
+package de.propra.game_of_advisors.user.domain;
 
 public record GitHubUserId(long value) {
     public GitHubUserId {

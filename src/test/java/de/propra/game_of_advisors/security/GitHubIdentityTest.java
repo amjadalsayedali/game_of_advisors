@@ -1,6 +1,6 @@
 package de.propra.game_of_advisors.security;
 
-import de.propra.game_of_advisors.user.GitHubUserId;
+import de.propra.game_of_advisors.user.domain.GitHubUserId;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

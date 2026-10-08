@@ -1,6 +1,6 @@
 package de.propra.game_of_advisors.security;
 
-import de.propra.game_of_advisors.user.GitHubUserId;
+import de.propra.game_of_advisors.user.domain.GitHubUserId;
 import org.jspecify.annotations.NonNull;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
