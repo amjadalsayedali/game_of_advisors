@@ -9,6 +9,7 @@ import de.propra.game_of_advisors.matching.application.MatchingService;
 import de.propra.game_of_advisors.matching.application.TopicMatch;
 import de.propra.game_of_advisors.topic.application.TopicQueryService;
 import de.propra.game_of_advisors.topic.application.TopicSummary;
+import de.propra.game_of_advisors.user.application.UserQueryService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,9 @@ class MatchingControllerTest {
 
     @MockitoBean
     AdvisorQueryService advisorQueryService;
+
+    @MockitoBean
+    UserQueryService userQueryService;
 
     @Test
     @DisplayName("shows mathingform")

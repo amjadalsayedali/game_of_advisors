@@ -2,6 +2,7 @@ package de.propra.game_of_advisors.admin.web;
 
 import de.propra.game_of_advisors.SecurityConfig;
 import de.propra.game_of_advisors.user.application.UserManagementService;
+import de.propra.game_of_advisors.user.application.UserQueryService;
 import de.propra.game_of_advisors.user.domain.GitHubUserId;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -28,6 +29,9 @@ class AdminControllerTest {
 
     @MockitoBean
     UserManagementService userManagementService;
+
+    @MockitoBean
+    UserQueryService userQueryService;
 
     @Test
     @DisplayName("redirects anonymous user to login")

@@ -4,6 +4,7 @@ import de.propra.game_of_advisors.SecurityConfig;
 import de.propra.game_of_advisors.advisor.application.AdvisorDetails;
 import de.propra.game_of_advisors.advisor.application.AdvisorQueryService;
 import de.propra.game_of_advisors.advisor.application.AdvisorSummary;
+import de.propra.game_of_advisors.user.application.UserQueryService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,9 @@ class AdvisorsContollerTest {
 
     @MockitoBean
     AdvisorQueryService advisorQueryService;
+
+    @MockitoBean
+    UserQueryService userQueryService;
 
     @Test
     @DisplayName("show advisor Overview")

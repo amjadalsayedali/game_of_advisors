@@ -3,6 +3,7 @@ package de.propra.game_of_advisors;
 import de.propra.game_of_advisors.security.AdminProperties;
 import de.propra.game_of_advisors.security.AdminUsers;
 import de.propra.game_of_advisors.security.GitHubAuthoritiesMapper;
+import de.propra.game_of_advisors.user.application.UserQueryService;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
@@ -53,14 +54,12 @@ public class SecurityConfig {
     }
 
     @Bean
-    GitHubAuthoritiesMapper gitHubAuthoritiesMapper(AdminUsers adminUsers) {
-        return new GitHubAuthoritiesMapper(adminUsers);
+    GitHubAuthoritiesMapper gitHubAuthoritiesMapper(AdminUsers adminUsers, UserQueryService userQueryService) {
+        return new GitHubAuthoritiesMapper(adminUsers, userQueryService);
     }
 
     @Bean
-    AuthenticationEventPublisher authenticationEventPublisher(
-            ApplicationEventPublisher applicationEventPublisher
-    ) {
+    AuthenticationEventPublisher authenticationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
         return new DefaultAuthenticationEventPublisher(
                 applicationEventPublisher
         );
