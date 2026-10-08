@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,6 +17,31 @@
     <p>
         Dieser Bereich ist ausschließlich für Administrator:innen zugänglich.
     </p>
+
+    <p th:if="${successMessage}"
+       th:text="${successMessage}">
+    </p>
+
+    <section aria-labelledby="advisor-role-heading">
+        <h3 id="advisor-role-heading">
+            Betreuendenrolle vergeben
+        </h3>
+
+        <form method="post" th:action="@{/admin/advisors}">
+            <label for="github-user-id">
+                Numerische GitHub-ID
+            </label>
+
+            <input
+            id="github-user-id"
+            name="githubUserId"
+            type="number"
+            min="1"
+            required>
+
+            <button type="submit">Als Betreuer:in freischalten</button>
+        </form>
+    </section>
 </main>
 
 </body>
