@@ -1,11 +1,9 @@
 package de.propra.game_of_advisors.matching.application;
 
-import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
 
-@Service
 public class MatchingService {
 
     public MatchingResult match(

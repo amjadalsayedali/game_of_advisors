@@ -1,11 +1,9 @@
 package de.propra.game_of_advisors.advisor.application;
 
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-@Service
 public class AdvisorQueryService {
     public List<AdvisorSummary> findAll() {
         return List.of(
