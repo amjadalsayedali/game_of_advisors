@@ -50,6 +50,54 @@ class UserManagementServiceTest {
         .isInstanceOf(UserNotFoundException.class);
     }
 
+    @Test
+    @DisplayName("registers unkonwn user")
+    void test_03() {
+        GitHubUserId userId = new GitHubUserId(123456L);
+
+        TestUserRepository repository = new TestUserRepository();
+
+        UserManagementService service = new UserManagementService(repository);
+
+        service.registerUser(userId);
+
+        User user = repository
+                .findById(userId)
+                .orElseThrow();
+
+        assertThat(user.githubUserId())
+                .isEqualTo(userId);
+
+        assertThat(user.hasRole(UserRole.STUDENT))
+                .isTrue();
+    }
+
+    @Test
+    @DisplayName("does not replace existing user during registration")
+    void test_04() {
+        GitHubUserId userId = new GitHubUserId(123456L);
+
+        User existingUser = new User(userId);
+
+        existingUser.grantAdvisorRole();
+
+        TestUserRepository repository = new TestUserRepository();
+
+        repository.save(existingUser);
+
+        UserManagementService service = new UserManagementService(repository);
+
+        service.registerUser(userId);
+
+        User storedUser = repository
+                .findById(userId)
+                .orElseThrow();
+
+        assertThat(
+                storedUser.hasRole(UserRole.ADVISOR)
+        ).isTrue();
+    }
+
     private static class TestUserRepository implements UserRepository {
         private final Map<GitHubUserId, User> users = new HashMap<>();
 
@@ -61,7 +109,7 @@ class UserManagementServiceTest {
         @Override
         public void save(User user) {
             users.put(
-                    user.getGitHubUserId(),
+                    user.githubUserId(),
                     user
             );
         }

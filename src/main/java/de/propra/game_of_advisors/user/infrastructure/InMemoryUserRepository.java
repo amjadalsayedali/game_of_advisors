@@ -19,6 +19,6 @@ public final class InMemoryUserRepository implements UserRepository {
 
     @Override
     public void save(User user) {
-        users.put(user.getGitHubUserId(), user);
+        users.put(user.githubUserId(), user);
     }
 }

@@ -11,6 +11,15 @@ public final class UserManagementService {
         this.userRepository = userRepository;
     }
 
+    public void registerUser(GitHubUserId gitHubUserId) {
+        if(userRepository.findById(gitHubUserId).isPresent()) {
+            return;
+        }
+
+        User user = new User(gitHubUserId);
+        userRepository.save(user);
+    }
+
     public void grantAdvisorRole(GitHubUserId gitHubUserId) {
         User user = userRepository.findById(gitHubUserId)
                 .orElseThrow(() -> new UserNotFoundException(gitHubUserId)

@@ -14,7 +14,7 @@ public class User {
         this.roles = EnumSet.of(UserRole.STUDENT);
     }
 
-    public GitHubUserId getGitHubUserId() {
+    public GitHubUserId githubUserId() {
         return gitHubUserId;
     }
 
