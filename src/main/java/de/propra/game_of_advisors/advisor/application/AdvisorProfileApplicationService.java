@@ -4,6 +4,7 @@ import de.propra.game_of_advisors.advisor.domain.AdvisorProfile;
 import de.propra.game_of_advisors.advisor.domain.FieldOfStudy;
 import de.propra.game_of_advisors.user.domain.GitHubUserId;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -45,5 +46,16 @@ public final class AdvisorProfileApplicationService {
         }
 
         repository.save(profile);
+    }
+
+    public Optional<AdvisorProfileData> findProfile(GitHubUserId ownerId) {
+        return repository.findByOwnerId(ownerId)
+                .map(profile -> new AdvisorProfileData(
+                        profile.name(),
+                        profile.contactInfomration(),
+                        profile.fields().stream()
+                                .map(FieldOfStudy::name)
+                                .collect(Collectors.toSet())
+                ));
     }
 }

@@ -8,9 +8,75 @@
 <main>
     <h1>Eigenes Betreuendenprofil</h1>
 
-    <p>
-        Hier kann das eigene Betreuendenprofil bearbeitet werden.
+    <p th:if="${successMessage}"
+       th:text="${successMessage}">
     </p>
+
+    <form method="post"
+          th:action="@{/advisor/profile}">
+
+        <div>
+            <label for="name">Name</label>
+            <input id="name"
+                   name="name"
+                   type="text"
+                   required
+                   th:value="${profile.name}">
+        </div>
+
+        <div>
+            <label for="contactInformation">
+                Kontaktinformationen
+            </label>
+
+            <input id="contactInformation"
+                   name="contactInformation"
+                   type="text"
+                   required
+                   th:value="${profile.contactInformation}">
+        </div>
+
+        <fieldset>
+            <legend>Fachgebiete</legend>
+
+            <label>
+                <input type="checkbox"
+                       name="field"
+                       value="Compilerbau"
+                       th:checked="${profile.fields.contains('Compilerbau')}">
+                Compilerbau
+            </label>
+
+            <label>
+                <input type="checkbox"
+                       name="field"
+                       value="Formale Methoden"
+                       th:checked="${profile.fields.contains('Formale Methoden')}">
+                Formale Methoden
+            </label>
+
+            <label>
+                <input type="checkbox"
+                       name="field"
+                       value="Rust"
+                       th:checked="${profile.fields.contains('Rust')}">
+                Rust
+            </label>
+
+            <label>
+                <input type="checkbox"
+                       name="field"
+                       value="Java"
+                       th:checked="${profile.fields.contains('Java')}">
+                Java
+            </label>
+        </fieldset>
+
+        <button type="submit">
+            Profil speichern
+        </button>
+
+    </form>
 </main>
 
 </body>
